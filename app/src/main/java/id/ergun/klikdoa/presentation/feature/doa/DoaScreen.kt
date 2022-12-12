@@ -10,6 +10,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -95,6 +96,7 @@ fun DoaScreen(
         items(doas, key = { it.id }) { doa ->
           DoaListItem(
             name = doa.name,
+            doaInArabic = doa.doaInArabic,
             photoUrl = "",
             modifier = Modifier
               .fillMaxWidth()
@@ -126,11 +128,12 @@ fun DoaScreen(
 @Composable
 fun DoaListItem(
   name: String,
+  doaInArabic: String,
   photoUrl: String,
   modifier: Modifier = Modifier
 ) {
-  Row(
-    verticalAlignment = Alignment.CenterVertically,
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
     modifier = modifier.clickable {}
   ) {
 //    AsyncImage(
@@ -147,8 +150,14 @@ fun DoaListItem(
       fontWeight = FontWeight.Medium,
       modifier = Modifier
         .fillMaxWidth()
-        .weight(1f)
         .padding(start = 16.dp)
+    )
+    Text(
+        text = doaInArabic,
+    fontWeight = FontWeight.Medium,
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(start = 16.dp)
     )
   }
 }
@@ -244,6 +253,7 @@ fun DoaListItemPreview() {
   KlikDoaTheme {
     DoaListItem(
       name = "H.O.S. Cokroaminoto",
+      doaInArabic = "بِاسْمِكَ رَبِّيْ وَضَعْتُ جَنْبِيْ، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِيْ فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِيْنَ",
       photoUrl = ""
     )
   }
