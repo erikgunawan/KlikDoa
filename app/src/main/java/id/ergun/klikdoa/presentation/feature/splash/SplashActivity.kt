@@ -1,4 +1,4 @@
-package id.ergun.klikdoa.feature.splash
+package id.ergun.klikdoa.presentation.feature.splash
 
 /**
  * @author erikgunawan

@@ -1,4 +1,4 @@
-package id.ergun.klikdoa.ui.theme
+package id.ergun.klikdoa.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

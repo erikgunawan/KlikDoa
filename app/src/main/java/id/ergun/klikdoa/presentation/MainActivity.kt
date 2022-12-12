@@ -1,4 +1,4 @@
-package id.ergun.klikdoa
+package id.ergun.klikdoa.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import id.ergun.klikdoa.ui.theme.KlikDoaTheme
+import id.ergun.klikdoa.presentation.feature.doa.DoaScreen
+import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
 
 /**
  * @author erikgunawan
@@ -26,7 +27,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                  DoaScreen()
+//                    Greeting("Android")
                 }
             }
         }
