@@ -13,7 +13,7 @@ class DoaRepository {
 
   fun searchDoa(query: String): List<Doa>{
     return DoaData.doas.filter {
-      it.name.contains(query, ignoreCase = true)
+      it.doaName.contains(query, ignoreCase = true)
     }
   }
 }

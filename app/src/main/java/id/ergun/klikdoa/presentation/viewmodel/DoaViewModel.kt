@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 class DoaViewModel(private val repository: DoaRepository) : ViewModel() {
   private val _groupedDoas = MutableStateFlow(
     repository.getDoas()
-      .sortedBy { it.name }
-      .groupBy { it.name[0] }
+//      .sortedBy { it.doaName }
+      .groupBy { it.doaName[0] }
   )
   val groupedDoas: StateFlow<Map<Char, List<Doa>>> get() = _groupedDoas
 
@@ -27,8 +27,8 @@ class DoaViewModel(private val repository: DoaRepository) : ViewModel() {
   fun search(newQuery: String) {
     _query.value = newQuery
     _groupedDoas.value = repository.searchDoa(_query.value)
-      .sortedBy { it.name }
-      .groupBy { it.name[0] }
+      .sortedBy { it.doaName }
+      .groupBy { it.doaName[0] }
   }
 }
 

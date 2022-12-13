@@ -89,15 +89,14 @@ fun DoaScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.primary)
         )
       }
-      groupedDoas.forEach { (initial, doas) ->
+      groupedDoas.forEach { (_, doas) ->
 //        stickyHeader {
 //          CharacterHeader(initial)
 //        }
         items(doas, key = { it.id }) { doa ->
           DoaListItem(
-            name = doa.name,
+            name = doa.doaName,
             doaInArabic = doa.doaInArabic,
-            photoUrl = "",
             modifier = Modifier
               .fillMaxWidth()
               .animateItemPlacement(tween(durationMillis = 100))
@@ -129,7 +128,6 @@ fun DoaScreen(
 fun DoaListItem(
   name: String,
   doaInArabic: String,
-  photoUrl: String,
   modifier: Modifier = Modifier
 ) {
   Column(
@@ -254,7 +252,6 @@ fun DoaListItemPreview() {
     DoaListItem(
       name = "H.O.S. Cokroaminoto",
       doaInArabic = "بِاسْمِكَ رَبِّيْ وَضَعْتُ جَنْبِيْ، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِيْ فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِيْنَ",
-      photoUrl = ""
     )
   }
 }

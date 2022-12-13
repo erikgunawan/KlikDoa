@@ -5,7 +5,7 @@ package id.ergun.klikdoa.data.model
  */
 data class Doa(
   val id: String,
-  val name: String,
+  val doaName: String,
   val doaInArabic: String = "",
   val doaInLatin: String = "",
   val doaInBahasa: String = "",
