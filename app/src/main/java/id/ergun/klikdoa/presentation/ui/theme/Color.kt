@@ -1,4 +1,4 @@
-package id.ergun.klikdoa.ui.theme
+package id.ergun.klikdoa.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
