@@ -116,26 +116,10 @@ fun DoaListItem(
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = modifier.clickable {
       navigateToDetail(doa.id)
-    }
+    }.padding(16.dp)
   ) {
-//    AsyncImage(
-//      model = photoUrl,
-//      contentDescription = null,
-//      contentScale = ContentScale.Crop,
-//      modifier = Modifier
-//        .padding(8.dp)
-//        .size(60.dp)
-//        .clip(CircleShape)
-//    )
     Text(
       text = doa.doaName,
-      fontWeight = FontWeight.Medium,
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = 16.dp)
-    )
-    Text(
-      text = doa.doaInArabic,
       fontWeight = FontWeight.Medium,
       modifier = Modifier
         .fillMaxWidth()

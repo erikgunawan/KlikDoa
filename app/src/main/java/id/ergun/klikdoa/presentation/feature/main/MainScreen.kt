@@ -24,6 +24,7 @@ import id.ergun.klikdoa.R
 import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.presentation.feature.doa.DoaScreen
 import id.ergun.klikdoa.presentation.feature.doa.detail.DetailScreen
+import id.ergun.klikdoa.presentation.feature.splash.SplashScreen
 import id.ergun.klikdoa.presentation.ui.navigation.NavigationItem
 import id.ergun.klikdoa.presentation.ui.navigation.Screen
 
@@ -42,7 +43,8 @@ fun MainScreen(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.DetailDoa.route) {
+            if (currentRoute != Screen.DetailDoa.route &&
+                currentRoute != Screen.Splash.route) {
                 BottomBar(navController)
             }
         },
@@ -50,9 +52,12 @@ fun MainScreen(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+          composable(Screen.Splash.route) {
+            SplashScreen(navController = navController)
+            }
             composable(Screen.Home.route) {
                 DoaScreen(
                     navigateToDetail = { doaId ->
