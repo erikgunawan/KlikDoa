@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- * Created by alfacart on 12/12/22.
+ * @author erikgunawan
+ * Created 24/12/22 at 22.50
  */
-
 class DoaViewModel(private val repository: DoaRepository) : ViewModel() {
   private val _groupedDoas = MutableStateFlow(
     repository.getDoas()
