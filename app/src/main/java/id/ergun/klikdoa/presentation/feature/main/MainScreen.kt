@@ -21,9 +21,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import id.ergun.klikdoa.R
-import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.presentation.feature.doa.DoaScreen
 import id.ergun.klikdoa.presentation.feature.doa.detail.DetailScreen
+import id.ergun.klikdoa.presentation.feature.doa.favorite.DoaFavoriteScreen
+import id.ergun.klikdoa.presentation.feature.profile.ProfileScreen
 import id.ergun.klikdoa.presentation.feature.splash.SplashScreen
 import id.ergun.klikdoa.presentation.ui.navigation.NavigationItem
 import id.ergun.klikdoa.presentation.ui.navigation.Screen
@@ -65,36 +66,25 @@ fun MainScreen(
                     }
                 )
             }
-            composable(Screen.Cart.route) {
-                val context = LocalContext.current
-//                DoaScreen(
-//                    onOrderButtonClicked = { message ->
-//                        shareOrder(context, message)
-//                    }
-//                )
+            composable(Screen.Favorite.route) {
+              DoaFavoriteScreen(
+                navigateToDetail = { doaId ->
+                  navController.navigate(Screen.DetailDoa.createRoute(doaId))
+                }
+              )
             }
             composable(Screen.Profile.route) {
-//                DoaScreen()
+                ProfileScreen()
             }
             composable(
                 route = Screen.DetailDoa.route,
-                arguments = listOf(navArgument("doaId") { type = NavType.LongType }),
+                arguments = listOf(navArgument("doaId") { type = NavType.StringType }),
             ) {
-                val doa: Doa = it.arguments?.getParcelable("doa") ?: Doa.generateDefaultDoa()
+                val doaId: String = it.arguments?.getString("doaId") ?: ""
                 DetailScreen(
-                    doaId = doa.id,
+                    doaId = doaId,
                     navigateBack = {
                         navController.navigateUp()
-                    },
-                    navigateToCart = {
-                        navController.popBackStack()
-                        navController.navigate(Screen.Cart.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
                     }
                 )
             }
@@ -136,7 +126,7 @@ private fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_favorite),
                 icon = Icons.Default.Favorite,
-                screen = Screen.Cart
+                screen = Screen.Favorite
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),

@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,11 +35,14 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.data.model.DoaData
 import id.ergun.klikdoa.presentation.ui.navigation.Screen.DetailDoa
 import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
 import id.ergun.klikdoa.R
+import id.ergun.klikdoa.data.repository.DoaRepository
+import id.ergun.klikdoa.presentation.viewmodel.DoaViewModel
 
 /**
  * @author erikgunawan
@@ -48,17 +52,10 @@ import id.ergun.klikdoa.R
 @Composable
 fun DetailScreen(
   doaId: String,
-//    viewModel: DetailRewardViewModel = viewModel(
-//        factory = ViewModelFactory(
-//            Injection.provideRepository()
-//        )
-//    ),
-  navigateBack: () -> Unit,
-  navigateToCart: () -> Unit
+    viewModel: DoaViewModel = hiltViewModel(),
+  navigateBack: () -> Unit
 ) {
-  val doa = DoaData.doas.find { it.id == "1" } ?: Doa.generateDefaultDoa()
-  println("Doa detail " + doa.toString())
-  DetailContent(doa)
+  DetailContent(viewModel.getDoaById(doaId), navigateBack = navigateBack)
 //    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
 //        when (uiState) {
 //            is UiState.Loading -> {
@@ -87,32 +84,38 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
   doa: Doa,
-  modifier: Modifier = Modifier,
+  navigateBack: () -> Unit,
 ) {
+  val mContext = LocalContext.current
   var thumbIconLiked by remember {
     mutableStateOf(false)
   }
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
-    TopAppBar(
-      title = { Text(text = "AppBar") },
-      actions = {
+    DoaDetailTopAppBarScreen(
+      navigateBack = {
+        navigateBack()
+                     },
+      topAppBarAction = {
         IconButton(onClick = {
-          thumbIconLiked = !thumbIconLiked
-        }) {
-          Image(painter = painterResource(id = if (thumbIconLiked) {
-            R.drawable.ic_favorite_checked
-          } else {
-            R.drawable.ic_favorite
-          }),
-            contentDescription = "Logo",)
-        }
+        thumbIconLiked = !thumbIconLiked
+          Toast.makeText(mContext, thumbIconLiked.toString(), Toast.LENGTH_SHORT).show()
+      }) {
+        Image(painter = painterResource(id = if (thumbIconLiked) {
+          R.drawable.ic_favorite_checked
+        } else {
+          R.drawable.ic_favorite
+        }),
+          contentDescription = "Logo",)
+      }
       }
     )
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
-      modifier = Modifier.padding(16.dp)
+      modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(16.dp)
     ) {
       Text(
         text = doa.doaName,

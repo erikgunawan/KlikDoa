@@ -2,24 +2,34 @@ package id.ergun.klikdoa.presentation.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.data.repository.DoaRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author erikgunawan
  * Created 24/12/22 at 22.50
  */
-class DoaViewModel(private val repository: DoaRepository) : ViewModel() {
+@HiltViewModel
+class DoaViewModel @Inject constructor(private val repository: DoaRepository) : ViewModel() {
   private val _groupedDoas = MutableStateFlow(
     repository.getDoas()
-//      .sortedBy { it.doaName }
       .groupBy { it.doaName[0] }
   )
+
   val groupedDoas: StateFlow<Map<Char, List<Doa>>> get() = _groupedDoas
+
+  private val _favoriteDoas = MutableStateFlow<List<Doa>>(arrayListOf())
+  val favoriteDoas: StateFlow<List<Doa>> get() = _favoriteDoas
 
   private val _query = mutableStateOf("")
   val query: State<String> get() = _query
@@ -30,16 +40,20 @@ class DoaViewModel(private val repository: DoaRepository) : ViewModel() {
       .sortedBy { it.doaName }
       .groupBy { it.doaName[0] }
   }
-}
 
-class ViewModelFactory(private val repository: DoaRepository) :
-  ViewModelProvider.NewInstanceFactory() {
-
-  @Suppress("UNCHECKED_CAST")
-  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-    if (modelClass.isAssignableFrom(DoaViewModel::class.java)) {
-      return DoaViewModel(repository) as T
+  fun getDoaById(doaId: String): Doa {
+    return repository.getDoas().first {
+      it.id == doaId
     }
-    throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+  }
+
+  fun getFavoriteDoas() {
+    viewModelScope.launch(Dispatchers.IO) {
+//      _favoriteDoas = repository.getFavoriteDoas()//.collect {
+//        _favoriteDoas.value = it.groupBy { doa ->
+//          doa.doaName[0]
+//        }
+//      }
+    }
   }
 }
