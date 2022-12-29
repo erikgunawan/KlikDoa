@@ -1,29 +1,31 @@
 package id.ergun.klikdoa.presentation.feature.doa.detail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import id.ergun.klikdoa.R
+import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
+import id.ergun.klikdoa.presentation.viewmodel.DoaViewModel
 
 /**
  * @author erikgunawan
@@ -33,14 +35,10 @@ import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
 @Composable
 fun DetailScreen(
     doaId: String,
-//    viewModel: DetailRewardViewModel = viewModel(
-//        factory = ViewModelFactory(
-//            Injection.provideRepository()
-//        )
-//    ),
-    navigateBack: () -> Unit,
-    navigateToCart: () -> Unit
+    viewModel: DoaViewModel = hiltViewModel(),
+    navigateBack: () -> Unit
 ) {
+    DetailContent(viewModel.getDoaById(doaId), navigateBack = navigateBack)
 //    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
 //        when (uiState) {
 //            is UiState.Loading -> {
@@ -65,73 +63,81 @@ fun DetailScreen(
 //    }
 }
 
+@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun DetailContent(
-    title: String,
-    basePoint: Int,
-    count: Int,
-    onBackClick: () -> Unit,
-    onAddToCart: (count: Int) -> Unit,
-    modifier: Modifier = Modifier,
+    doa: Doa,
+    navigateBack: () -> Unit,
 ) {
-
-    var totalPoint by rememberSaveable { mutableStateOf(0) }
-    var orderCount by rememberSaveable { mutableStateOf(count) }
-
-    Column(modifier = modifier) {
+    val mContext = LocalContext.current
+    var thumbIconLiked by remember {
+        mutableStateOf(false)
+    }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        DoaDetailTopAppBarScreen(
+            navigateBack = {
+                navigateBack()
+            },
+            topAppBarAction = {
+                IconButton(onClick = {
+                    thumbIconLiked = !thumbIconLiked
+                    Toast.makeText(mContext, thumbIconLiked.toString(), Toast.LENGTH_SHORT).show()
+                }) {
+                    Image(painter = painterResource(id = if (thumbIconLiked) {
+                        R.drawable.ic_favorite_checked
+                    } else {
+                        R.drawable.ic_favorite
+                    }),
+                        contentDescription = "Logo",)
+                }
+            }
+        )
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .weight(1f)
+                .padding(16.dp)
         ) {
-            Box {
+            Text(
+                text = doa.doaName,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp)
+            )
+            Text(
+                text = doa.doaInArabic,
+                fontSize = TextUnit(24F, TextUnitType.Sp),
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp)
+            )
+            Text(
+                text = doa.doaInBahasa,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp)
+            )
 
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "back",//stringResource(R.string.back),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable { onBackClick() }
-                )
-            }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = title,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.h5.copy(
-                        fontWeight = FontWeight.ExtraBold
-                    ),
-                )
-            }
+            Text(
+                text = doa.doaInLatin,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp)
+            )
+            Text(
+                text = doa.footNote,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp)
+            )
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(4.dp)
-            .background(Color.LightGray))
-//        Column(
-//            modifier = Modifier.padding(16.dp)
-//        ) {
-//            ProductCounter(
-//                1,
-//                orderCount,
-//                onProductIncreased = { orderCount++ },
-//                onProductDecreased = { if (orderCount > 0) orderCount-- },
-//                modifier = Modifier
-//                    .align(Alignment.CenterHorizontally)
-//                    .padding(bottom = 16.dp)
-//            )
-//            totalPoint = basePoint * orderCount
-//            OrderButton(
-//                text = stringResource(R.string.add_to_cart, totalPoint),
-//                enabled = orderCount > 0,
-//                onClick = {
-//                    onAddToCart(orderCount)
-//                }
-//            )
-//        }
     }
 }
 
@@ -139,12 +145,12 @@ fun DetailContent(
 @Composable
 fun DetailContentPreview() {
     KlikDoaTheme {
-        DetailContent(
-            "Jaket Hoodie Dicoding",
-            7500,
-            1,
-            onBackClick = {},
-            onAddToCart = {}
-        )
+//        DetailContent(
+//            "Jaket Hoodie Dicoding",
+//            7500,
+//            1,
+//            onBackClick = {},
+//            onAddToCart = {}
+//        )
     }
 }
