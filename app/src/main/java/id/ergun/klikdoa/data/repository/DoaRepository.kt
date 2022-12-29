@@ -13,7 +13,7 @@ import javax.inject.Inject
  * Created 24/12/22 at 22.50
  */
 class DoaRepository @Inject constructor(
-  val doaFavoriteDao: DoaFavoriteDao
+    val doaFavoriteDao: DoaFavoriteDao
 ) {
     fun getDoas(): List<Doa> {
         return DoaData.doas
@@ -25,9 +25,9 @@ class DoaRepository @Inject constructor(
         }
     }
 
-  fun getFavoriteDoas(): Flow<List<Doa>> {
-    return doaFavoriteDao.getFavoriteDoas().map {
-      DoaFavorite.tranform(it)
+    fun getFavoriteDoas(): Flow<List<Doa>> {
+        return doaFavoriteDao.getFavoriteDoas().map {
+            DoaFavorite.tranform(it)
+        }
     }
-  }
 }

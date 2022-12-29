@@ -4,7 +4,8 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 /**
- * Created by alfacart on 28/12/22.
+ * @author erikgunawan
+ * Created 29/12/22 at 09.10
  */
 @HiltAndroidApp
 class KlikDoaApp : Application()

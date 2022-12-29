@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import id.ergun.klikdoa.presentation.feature.main.MainScreen
 import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
+import kotlin.text.Typography.dagger
 
 /**
  * @author erikgunawan

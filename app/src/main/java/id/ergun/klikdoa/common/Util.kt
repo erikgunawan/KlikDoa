@@ -4,57 +4,82 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 
 /**
- * Created by alfacart on 28/12/22.
+ * @author erikgunawan
+ * Created 29/12/22 at 09.17
  */
 object Util {
 
-  private const val LINKED_IN_URL = "https://www.linkedin.com/in/ergun4/"
-  private const val GITHUB_URL = "https://github.com/erikgunawan"
-  private const val INSTAGRAM_URL = "https://www.instagram.com/_erikgunawan_/"
+    const val FAVORITE_DOA_TABLE_NAME = "doa_favorite_table"
 
-  fun Context.openLinkedIn() {
-    try {
-      val intent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse(LINKED_IN_URL)
-        setPackage("com.linkedin.android")
-      }
-      startActivity(intent)
-    } catch (exception: ActivityNotFoundException) {
-      startActivity(
-        Intent(
-          Intent.ACTION_VIEW,
-          Uri.parse(LINKED_IN_URL)
-        )
-      )
+    private const val LINKED_IN_URL = "https://www.linkedin.com/in/ergun4/"
+    private const val GITHUB_URL = "https://github.com/erikgunawan"
+    private const val INSTAGRAM_URL = "https://www.instagram.com/_erikgunawan_/"
+    private const val TELEGRAM_URL = "https://t.me/erikgunawan"
+
+    fun Context.openLinkedIn() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(LINKED_IN_URL)
+                setPackage("com.linkedin.android")
+            }
+            startActivity(intent)
+        } catch (exception: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(LINKED_IN_URL)
+                )
+            )
+        }
     }
-  }
 
-  fun Context.openGithub() {
-    startActivity(
-      Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(GITHUB_URL)
-      )
-    )
-  }
-
-  fun Context.openInstagram() {
-    try {
-      val intent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse(INSTAGRAM_URL)
-        setPackage("com.instagram.android")
-      }
-      startActivity(intent)
-    } catch (anfe: ActivityNotFoundException) {
-      startActivity(
-        Intent(
-          Intent.ACTION_VIEW,
-          Uri.parse(INSTAGRAM_URL)
+    fun Context.openGithub() {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(GITHUB_URL)
+            )
         )
-      )
     }
-  }
+
+    fun Context.openInstagram() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(INSTAGRAM_URL)
+                setPackage("com.instagram.android")
+            }
+            startActivity(intent)
+        } catch (anfe: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(INSTAGRAM_URL)
+                )
+            )
+        }
+    }
+
+    fun Context.openTelegram() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(TELEGRAM_URL)
+                setPackage("org.telegram.messenger")
+            }
+            startActivity(intent)
+        } catch (anfe: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(TELEGRAM_URL)
+                )
+            )
+        }
+    }
+
+    fun Context.showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }

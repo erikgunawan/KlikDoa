@@ -1,6 +1,5 @@
 package id.ergun.klikdoa.presentation.feature.main
 
-import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -10,7 +9,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -33,7 +31,6 @@ import id.ergun.klikdoa.presentation.ui.navigation.Screen
  * @author erikgunawan
  * Created 24/12/22 at 23.05
  */
-
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -56,8 +53,8 @@ fun MainScreen(
             startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-          composable(Screen.Splash.route) {
-            SplashScreen(navController = navController)
+            composable(Screen.Splash.route) {
+                SplashScreen(navController = navController)
             }
             composable(Screen.Home.route) {
                 DoaScreen(
@@ -67,14 +64,18 @@ fun MainScreen(
                 )
             }
             composable(Screen.Favorite.route) {
-              DoaFavoriteScreen(
-                navigateToDetail = { doaId ->
-                  navController.navigate(Screen.DetailDoa.createRoute(doaId))
-                }
-              )
+                DoaFavoriteScreen(
+                    navigateToDetail = { doaId ->
+                        navController.navigate(Screen.DetailDoa.createRoute(doaId))
+                    }
+                )
             }
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
             composable(
                 route = Screen.DetailDoa.route,
@@ -90,21 +91,6 @@ fun MainScreen(
             }
         }
     }
-}
-
-private fun shareOrder(context: Context, summary: String) {
-//    val intent = Intent(Intent.ACTION_SEND).apply {
-//        type = "text/plain"
-//        putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.dicoding_reward))
-//        putExtra(Intent.EXTRA_TEXT, summary)
-//    }
-//
-//    context.startActivity(
-//        Intent.createChooser(
-//            intent,
-//            context.getString(R.string.dicoding_reward)
-//        )
-//    )
 }
 
 @Composable

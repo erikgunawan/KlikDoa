@@ -5,7 +5,7 @@ package id.ergun.klikdoa.presentation.ui.navigation
  * Created 24/12/22 at 23.16
  */
 sealed class Screen(val route: String) {
-  object Splash : Screen("splash")
+    object Splash : Screen("splash")
     object Home : Screen("home")
     object Favorite : Screen("favorite")
     object Profile : Screen("profile")
