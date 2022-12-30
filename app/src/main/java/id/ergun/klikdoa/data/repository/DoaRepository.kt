@@ -1,6 +1,7 @@
 package id.ergun.klikdoa.data.repository
 
 import id.ergun.klikdoa.data.local.doa.DoaFavorite
+import id.ergun.klikdoa.data.local.doa.DoaFavorite.Companion.transformToDoaFavoriteModel
 import id.ergun.klikdoa.data.local.doa.DoaFavoriteDao
 import id.ergun.klikdoa.data.model.Doa
 import id.ergun.klikdoa.data.model.DoaData
@@ -30,4 +31,10 @@ class DoaRepository @Inject constructor(
             DoaFavorite.tranform(it)
         }
     }
+
+  fun addFavoriteDoa(doa: Doa) = doaFavoriteDao.addFavoriteDoa(
+    doa.transformToDoaFavoriteModel()
+  )
+
+  fun removeFavoriteDoa(doaId: String) = doaFavoriteDao.removeFavoriteDoaById(doaId)
 }

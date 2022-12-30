@@ -25,8 +25,8 @@ class DoaViewModel @Inject constructor(private val repository: DoaRepository) : 
 
     val groupedDoas: StateFlow<List<Doa>> get() = _groupedDoas
 
-    private val _favoriteDoas = MutableStateFlow<List<Doa>>(arrayListOf())
-    val favoriteDoas: StateFlow<List<Doa>> get() = _favoriteDoas
+//    private val _favoriteDoas = MutableStateFlow<List<Doa>>(arrayListOf())
+    val favoriteDoas = repository.getFavoriteDoas()  //: StateFlow<List<Doa>> get() = _favoriteDoas
 
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query
@@ -43,13 +43,22 @@ class DoaViewModel @Inject constructor(private val repository: DoaRepository) : 
         }
     }
 
-    fun getFavoriteDoas() {
+    fun getFavoriteDoas() =
         viewModelScope.launch(Dispatchers.IO) {
+         repository.getFavoriteDoas()
 //      _favoriteDoas = repository.getFavoriteDoas()//.collect {
 //        _favoriteDoas.value = it.groupBy { doa ->
 //          doa.doaName[0]
 //        }
 //      }
         }
-    }
+
+
+  fun addFavoriteDoa(doa: Doa) = viewModelScope.launch(Dispatchers.IO) {
+    repository.addFavoriteDoa(doa)
+  }
+
+  fun removeFavoriteDoa(doaId: String) = viewModelScope.launch(Dispatchers.IO) {
+    repository.removeFavoriteDoa(doaId)
+  }
 }

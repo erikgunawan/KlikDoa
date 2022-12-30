@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import id.ergun.klikdoa.R
 import id.ergun.klikdoa.presentation.feature.doa.DoaScreen
-import id.ergun.klikdoa.presentation.feature.doa.detail.DetailScreen
+import id.ergun.klikdoa.presentation.feature.doa.detail.DoaDetailScreen
 import id.ergun.klikdoa.presentation.feature.doa.favorite.DoaFavoriteScreen
 import id.ergun.klikdoa.presentation.feature.profile.ProfileScreen
 import id.ergun.klikdoa.presentation.feature.splash.SplashScreen
@@ -73,7 +73,11 @@ fun MainScreen(
             composable(Screen.Profile.route) {
                 ProfileScreen(
                     navigateBack = {
-                        navController.navigateUp()
+                      navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Profile.route) {
+                          inclusive = true
+                        }
+                      }
                     }
                 )
             }
@@ -82,7 +86,7 @@ fun MainScreen(
                 arguments = listOf(navArgument("doaId") { type = NavType.StringType }),
             ) {
                 val doaId: String = it.arguments?.getString("doaId") ?: ""
-                DetailScreen(
+              DoaDetailScreen(
                     doaId = doaId,
                     navigateBack = {
                         navController.navigateUp()

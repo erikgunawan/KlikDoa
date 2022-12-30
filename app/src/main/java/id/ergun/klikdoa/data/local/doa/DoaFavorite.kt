@@ -3,6 +3,7 @@ package id.ergun.klikdoa.data.local.doa
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import id.ergun.klikdoa.common.Util.FAVORITE_DOA_TABLE_NAME
+import id.ergun.klikdoa.data.local.doa.DoaFavorite.Companion.transformToDoaFavoriteModel
 import id.ergun.klikdoa.data.model.Doa
 
 /**
@@ -27,9 +28,22 @@ data class DoaFavorite(
                 this.doaName,
                 this.doaInArabic,
                 this.doaInLatin,
+              this.doaInBahasa,
                 this.footNote
             )
         }
+
+      fun Doa.transformToDoaFavoriteModel(): DoaFavorite {
+        return DoaFavorite(
+          this.id,
+          this.doaName,
+          this.doaInArabic,
+          this.doaInLatin,
+          this.doaInBahasa,
+          this.footNote,
+          System.currentTimeMillis()
+        )
+      }
 
         fun tranform(list: List<DoaFavorite>): List<Doa> {
             return list.map {

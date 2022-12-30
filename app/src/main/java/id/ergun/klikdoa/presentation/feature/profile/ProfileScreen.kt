@@ -41,8 +41,8 @@ fun ProfileScreen(
         content = { padding ->
             Box(
                 contentAlignment = Alignment.Center, modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()) {
+                .fillMaxWidth()
+                .fillMaxHeight()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
@@ -50,30 +50,36 @@ fun ProfileScreen(
 
                     Text(
                         text = stringResource(R.string.my_name),
-                        fontSize = 20.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 16.dp)
+                        fontSize = 20.sp
                     )
+
+                  Spacer(modifier = Modifier.padding(top = 24.dp))
+
                     Image(
                         painter = painterResource(R.drawable.img_e),
                         contentDescription = null,
                         modifier = Modifier
-                            .requiredSize(128.dp)
-                            .clip(CircleShape)
+                          .requiredSize(128.dp)
+                          .clip(CircleShape)
                     )
+
+                  Spacer(modifier = Modifier.padding(top = 24.dp))
+
                     Text(
                         text = stringResource(R.string.my_description),
-                        fontSize = 18.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 24.dp)
+                        fontSize = 18.sp
                     )
+
+                  Spacer(modifier = Modifier.padding(top = 48.dp))
+
                     Text(
                         text = stringResource(R.string.find_me_on),
-                        fontSize = 16.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 8.dp)
+                        fontSize = 16.sp
                     )
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
+                          .fillMaxWidth()
+                          .padding(12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
@@ -82,20 +88,20 @@ fun ProfileScreen(
                             painter = painterResource(R.drawable.ic_linkedin),
                             contentDescription = null,
                             modifier = Modifier
-                                .clickable {
-                                    context.openLinkedIn()
-                                }
-                                .requiredSize(60.dp)
+                              .clickable {
+                                context.openLinkedIn()
+                              }
+                              .requiredSize(60.dp)
                         )
                         Image(
                             painter = painterResource(R.drawable.ic_github),
                             contentDescription = null,
                             modifier = Modifier
-                                .clickable {
-                                    context.openGithub()
-                                }
-                                .padding(8.dp)
-                                .requiredSize(60.dp)
+                              .clickable {
+                                context.openGithub()
+                              }
+                              .padding(8.dp)
+                              .requiredSize(60.dp)
                         )
                         Image(
                             painter = painterResource(R.drawable.ic_instagram),

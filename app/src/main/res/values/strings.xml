@@ -9,5 +9,6 @@
     <string name="empty_favorite_doa_message">Belum ada doa favorit yang ditambahkan</string>
     <string name="add_to_favorite_doa_message">Doa berhasil ditambahkan ke favorit</string>
     <string name="remove_from_favorite_doa_message">Doa berhasil dihapus dari favorit</string>
-    <string name="search_doa">Cari Doa</string>
+  <string name="search_doa">Cari Doa</string>
+    <string name="search_favorite_doa">Cari Doa Favorit</string>
 </resources>

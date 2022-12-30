@@ -37,8 +37,12 @@ fun SplashScreen(navController: NavController) {
                     OvershootInterpolator(4f).getInterpolation(it)
                 })
         )
-        delay(3000L)
-        navController.navigate(Screen.Home.route)
+        delay(2000L)
+        navController.navigate(Screen.Home.route) {
+          popUpTo(Screen.Splash.route) {
+            inclusive = true
+          }
+        }
     }
 
     // Image
