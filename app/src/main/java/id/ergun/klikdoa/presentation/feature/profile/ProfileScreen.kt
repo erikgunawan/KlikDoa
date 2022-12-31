@@ -13,6 +13,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import id.ergun.klikdoa.R
@@ -35,14 +38,14 @@ fun ProfileScreen(
         topBar = {
             BaseTopAppBar(navigateBack = {
                 navigateBack()
-            }) {
-            }
+            })
         },
         content = { padding ->
             Box(
                 contentAlignment = Alignment.Center, modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()) {
+                    .fillMaxHeight()
+                    .padding(padding)) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
@@ -50,25 +53,46 @@ fun ProfileScreen(
 
                     Text(
                         text = stringResource(R.string.my_name),
-                        fontSize = 20.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 16.dp)
+                        fontSize = 20.sp
                     )
+
+                    Spacer(modifier = Modifier.padding(top = 24.dp))
+
                     Image(
-                        painter = painterResource(R.drawable.img_e),
+                        painter = painterResource(R.drawable.img_profile),
                         contentDescription = null,
                         modifier = Modifier
                             .requiredSize(128.dp)
                             .clip(CircleShape)
                     )
+
+                    Spacer(modifier = Modifier.padding(top = 24.dp))
+
                     Text(
                         text = stringResource(R.string.my_description),
-                        fontSize = 18.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 24.dp)
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 16.dp))
+
+                    Text(
+                        text = stringResource(R.string.you_can_email_me),
+                        textAlign = TextAlign.Center,
+                        fontSize = 18.sp
                     )
                     Text(
+                        text = stringResource(R.string.my_email),
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Medium,
+                        fontStyle = FontStyle.Italic,
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 48.dp))
+
+                    Text(
                         text = stringResource(R.string.find_me_on),
-                        fontSize = 16.sp,
-                        modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 8.dp)
+                        fontSize = 16.sp
                     )
                     Row(
                         modifier = Modifier

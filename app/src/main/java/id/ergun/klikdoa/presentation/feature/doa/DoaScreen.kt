@@ -14,12 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import id.ergun.klikdoa.presentation.feature.base.DoaListItem
 import id.ergun.klikdoa.presentation.feature.base.SearchBar
-import id.ergun.klikdoa.presentation.ui.theme.KlikDoaTheme
 import id.ergun.klikdoa.presentation.viewmodel.DoaViewModel
 
 /**
@@ -33,8 +31,8 @@ fun DoaScreen(
     viewModel: DoaViewModel = hiltViewModel(),
     navigateToDetail: (String) -> Unit,
 ) {
-    val groupedDoas by viewModel.groupedDoas.collectAsState()
-    val query by viewModel.query
+    val doaList by viewModel.doaList.collectAsState()
+    val doaNameQuery by viewModel.doaName
 
     Box(modifier = modifier) {
         val listState = rememberLazyListState()
@@ -44,13 +42,13 @@ fun DoaScreen(
         ) {
             item {
                 SearchBar(
-                    query = query,
-                    onQueryChange = viewModel::search,
+                    query = doaNameQuery,
+                    onQueryChange = viewModel::searchDoa,
                     modifier = Modifier.background(MaterialTheme.colors.primary)
                 )
             }
 
-            items(groupedDoas) { doa ->
+            items(doaList) { doa ->
                 DoaListItem(
                     doa = doa,
                     modifier = Modifier
@@ -61,14 +59,5 @@ fun DoaScreen(
             }
         }
 
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun DoaScreenPreview() {
-    KlikDoaTheme {
-//        DoaScreen()
     }
 }

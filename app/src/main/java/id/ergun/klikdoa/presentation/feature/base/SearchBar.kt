@@ -24,9 +24,10 @@ import id.ergun.klikdoa.R
  */
 @Composable
 fun SearchBar(
+    modifier: Modifier = Modifier,
     query: String,
+    placeholder: String = stringResource(R.string.search_doa),
     onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     TextField(
         value = query,
@@ -44,8 +45,9 @@ fun SearchBar(
             unfocusedIndicatorColor = Color.Transparent,
         ),
         placeholder = {
-            Text(stringResource(R.string.search_doa))
+            Text(placeholder)
         },
+        singleLine = true,
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth()

@@ -27,7 +27,6 @@ fun SplashScreen(navController: NavController) {
         androidx.compose.animation.core.Animatable(0f)
     }
 
-    // AnimationEffect
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 0.8f,
@@ -37,11 +36,15 @@ fun SplashScreen(navController: NavController) {
                     OvershootInterpolator(4f).getInterpolation(it)
                 })
         )
-        delay(3000L)
-        navController.navigate(Screen.Home.route)
+        delay(2000L)
+        navController.navigate(Screen.Home.route) {
+            popUpTo(Screen.Splash.route) {
+                inclusive = true
+            }
+            launchSingleTop = true
+        }
     }
 
-    // Image
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()) {
         Image(painter = painterResource(id = R.drawable.img_logo),

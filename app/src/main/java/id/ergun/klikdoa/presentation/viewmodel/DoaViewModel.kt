@@ -1,7 +1,9 @@
 package id.ergun.klikdoa.presentation.viewmodel
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,21 +21,26 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DoaViewModel @Inject constructor(private val repository: DoaRepository) : ViewModel() {
-    private val _groupedDoas = MutableStateFlow(
+    private val _doaList = MutableStateFlow(
         repository.getDoas()
     )
 
-    val groupedDoas: StateFlow<List<Doa>> get() = _groupedDoas
+    val doaList: StateFlow<List<Doa>> get() = _doaList
 
-    private val _favoriteDoas = MutableStateFlow<List<Doa>>(arrayListOf())
-    val favoriteDoas: StateFlow<List<Doa>> get() = _favoriteDoas
+    private var _favoriteDoas = MutableStateFlow<List<Doa>>(
+        value = emptyList()
+    )
+    val favoriteDoas: StateFlow<List<Doa>> get() = _favoriteDoas// = repository.getFavoriteDoas()
 
-    private val _query = mutableStateOf("")
-    val query: State<String> get() = _query
+    private val _doaNameQuery = mutableStateOf("")
+    val doaName: State<String> get() = _doaNameQuery
 
-    fun search(newQuery: String) {
-        _query.value = newQuery
-        _groupedDoas.value = repository.searchDoa(_query.value)
+    var favoriteDoa by mutableStateOf(Doa.generateDefaultDoa())
+        private set
+
+    fun searchDoa(doaName: String) {
+        _doaNameQuery.value = doaName
+        _doaList.value = repository.searchDoa(_doaNameQuery.value)
             .sortedBy { it.doaName }
     }
 
@@ -43,13 +50,25 @@ class DoaViewModel @Inject constructor(private val repository: DoaRepository) : 
         }
     }
 
-    fun getFavoriteDoas() {
-        viewModelScope.launch(Dispatchers.IO) {
-//      _favoriteDoas = repository.getFavoriteDoas()//.collect {
-//        _favoriteDoas.value = it.groupBy { doa ->
-//          doa.doaName[0]
-//        }
-//      }
-        }
+    fun searchFavoriteDoa(doaName: String) = viewModelScope.launch(Dispatchers.IO) {
+        _doaNameQuery.value = doaName
+        _favoriteDoas.value = repository.searchFavoriteDoa(_doaNameQuery.value)
+            .sortedBy { it.doaName }
+    }
+
+    fun getFavoriteDoaById(doaId: String) = viewModelScope.launch(Dispatchers.IO) {
+        favoriteDoa = repository.getFavoriteDoaById(doaId) ?: Doa.generateDefaultDoa()
+    }
+
+    fun getFavoriteDoas() = viewModelScope.launch(Dispatchers.IO) {
+        _favoriteDoas.value = repository.getFavoriteDoas()
+    }
+
+    fun addFavoriteDoa(doa: Doa) = viewModelScope.launch(Dispatchers.IO) {
+        repository.addFavoriteDoa(doa)
+    }
+
+    fun removeFavoriteDoa(doaId: String) = viewModelScope.launch(Dispatchers.IO) {
+        repository.removeFavoriteDoa(doaId)
     }
 }

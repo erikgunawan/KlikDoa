@@ -12,4 +12,8 @@ sealed class Screen(val route: String) {
     object DetailDoa : Screen("home/{doaId}") {
         fun createRoute(doaId: String) = "home/$doaId"
     }
+    object DetailFavoriteDoa : Screen("favorite/{doaId}") {
+        fun createRoute(doaId: String) = "favorite/$doaId"
+    }
+
 }

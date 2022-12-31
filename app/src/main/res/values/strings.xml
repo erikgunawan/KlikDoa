@@ -5,9 +5,14 @@
     <string name="menu_profile">Profile</string>
     <string name="my_name">Hello, i\'m Erik Gunawan</string>
     <string name="my_description">I\'m Professional Android Developer</string>
+    <string name="you_can_email_me">You can email me at:</string>
+    <string name="my_email">erik.gunawan44@gmail.com</string>
     <string name="find_me_on">Find me on:</string>
     <string name="empty_favorite_doa_message">Belum ada doa favorit yang ditambahkan</string>
     <string name="add_to_favorite_doa_message">Doa berhasil ditambahkan ke favorit</string>
     <string name="remove_from_favorite_doa_message">Doa berhasil dihapus dari favorit</string>
     <string name="search_doa">Cari Doa</string>
+    <string name="search_favorite_doa">Cari Doa Favorit</string>
+    <string name="meaning">Artinya: </string>
+    <string name="foot_note">Catatan Kaki: </string>
 </resources>

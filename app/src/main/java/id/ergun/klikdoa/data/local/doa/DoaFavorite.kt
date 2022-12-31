@@ -27,14 +27,21 @@ data class DoaFavorite(
                 this.doaName,
                 this.doaInArabic,
                 this.doaInLatin,
+                this.doaInBahasa,
                 this.footNote
             )
         }
 
-        fun tranform(list: List<DoaFavorite>): List<Doa> {
-            return list.map {
-                it.tranform()
-            }
+        fun Doa.transformToDoaFavoriteModel(): DoaFavorite {
+            return DoaFavorite(
+                this.id,
+                this.doaName,
+                this.doaInArabic,
+                this.doaInLatin,
+                this.doaInBahasa,
+                this.footNote,
+                System.currentTimeMillis()
+            )
         }
     }
 }
