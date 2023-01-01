@@ -1,6 +1,7 @@
 package id.ergun.klikdoa.presentation.feature.doa.detail
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,13 +13,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import id.ergun.klikdoa.R
 import id.ergun.klikdoa.common.Util.showToast
@@ -96,14 +101,21 @@ fun DetailContent(
 
                 Spacer(modifier = Modifier.padding(top = 16.dp))
 
-                Text(
-                    text = doa.doaInArabic,
-                    fontSize = TextUnit(24F, TextUnitType.Sp),
-                    fontWeight = FontWeight.Medium,
+                Image(
+                    painter = painterResource(doa.doaImage),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 18.dp)
                 )
+//                Text(
+//                    text = doa.doaInArabic,
+//                    fontSize = TextUnit(24F, TextUnitType.Sp),
+//                    fontWeight = FontWeight.Medium,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(start = 18.dp)
+//                )
 
                 Spacer(modifier = Modifier.padding(top = 16.dp))
 

@@ -1,6 +1,7 @@
 package id.ergun.klikdoa.data.model
 
 import android.os.Parcelable
+import id.ergun.klikdoa.R
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -14,7 +15,8 @@ data class Doa(
     val doaInArabic: String = "",
     val doaInLatin: String = "",
     val doaInBahasa: String = "",
-    val footNote: String = ""
+    val footNote: String = "",
+    val doaImage: Int = R.drawable.img_logo
 ): Parcelable {
 
     companion object {
